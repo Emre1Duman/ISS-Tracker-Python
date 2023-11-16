@@ -1,4 +1,4 @@
-import requests, smtplib
+import requests, smtplib, time
 from datetime import datetime
 
 my_email = "email to send from"
@@ -29,17 +29,17 @@ sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 time_now = datetime.now()
 print(time_now.hour)
 
+while True:
 
-if iss_latitude >= 46.507351 and iss_latitude <= 56.507351 and time_now.hour >= sunset:
-    with smtplib.SMTP("smtp.gmail.com") as connection:
-        connection.starttls()
-        connection.login(user=my_email, password=password)
-        connection.sendmail(from_addr=my_email, to_addrs=my_email,
-                            msg="Subject:ISS Tracker Alert \n\n Look up now! ")
-        print("Email sent")
+    if iss_latitude >= 46.507351 and iss_latitude <= 56.507351 and time_now.hour >= sunset:
+        with smtplib.SMTP("smtp.gmail.com") as connection:
+            connection.starttls()
+            connection.login(user=my_email, password=password)
+            connection.sendmail(from_addr=my_email, to_addrs=my_email,
+                                msg="Subject:ISS Tracker Alert \n\n Look up now! ")
+            print("Email sent")
+    time.sleep(60)
 
-
-#run the code every 60 seconds.
 
 
 
